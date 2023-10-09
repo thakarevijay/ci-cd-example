@@ -9,6 +9,6 @@ app.UseSwagger();
 app.UseSwaggerUI();
 app.UseHttpsRedirection();
 //comments latest
-app.MapGet("/time", () => Results.Ok(DateTime.UtcNow));
+app.MapGet("/", () => "Hello World");
 
 await app.RunAsync();
