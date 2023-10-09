@@ -6,7 +6,7 @@ on:
     branches:
     - main
 env:
-  AZURE_WEBAPP_NAME: current-time-service
+  AZURE_WEBAPP_NAME: vijaycurrent-time-service
   AZURE_WEBAPP_PACKAGE_PATH: "./publish"
 jobs:
   publish:
@@ -18,7 +18,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '6.0.x'
+          dotnet-version: '7.0.x'
           
       - name: Restore
         run: dotnet restore ./DockerDotNet.sln
@@ -28,6 +28,11 @@ jobs:
         
       - name: Publish
         run: dotnet publish ./DockerDotNet.sln --configuration Release --no-build --output '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'
-
+      
+      - name: Deployment
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_BEA14A4620864783B58CF792046C676F }}
   
   
